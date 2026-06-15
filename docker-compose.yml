@@ -1,13 +1,21 @@
+networks:
+  todo-net:
+    driver: bridge
+
 services:
   redis:
     image: redis:7-alpine
     restart: unless-stopped
+    networks:
+      - todo-net
     volumes:
       - redis_data:/data
 
   backend:
     build: ./backend
     restart: unless-stopped
+    networks:
+      - todo-net
     environment:
       - REDIS_URL=redis://redis:6379
     depends_on:
@@ -16,6 +24,8 @@ services:
   nginx:
     build: ./nginx
     restart: unless-stopped
+    networks:
+      - todo-net
     depends_on:
       - backend
 
