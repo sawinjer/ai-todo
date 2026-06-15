@@ -2,8 +2,11 @@ const express = require('express');
 const { createClient } = require('redis');
 const { v4: uuidv4 } = require('uuid');
 
+const path = require('path');
+
 const app = express();
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const redis = createClient({ url: process.env.REDIS_URL || 'redis://localhost:6379' });
 redis.on('error', (err) => console.error('Redis error:', err));

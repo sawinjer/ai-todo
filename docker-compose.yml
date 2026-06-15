@@ -21,13 +21,5 @@ services:
     depends_on:
       - redis
 
-  nginx:
-    build: ./nginx
-    restart: unless-stopped
-    networks:
-      - todo-net
-    depends_on:
-      - backend
-
 volumes:
   redis_data:
